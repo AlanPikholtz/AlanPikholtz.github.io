@@ -16,6 +16,19 @@ VERSION:	Versoin Number
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'font-sec';
+  src: url("../plugins/fonts/Poppins-Regular.ttf");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'font-sec-b';
+  src: url("../plugins/fonts/Poppins-SemiBold.ttf");
+  font-style: normal;
+  font-display: swap;
+}
 body {
   line-height: 1.2;
   font-family: "Roboto", sans-serif;
@@ -327,7 +340,11 @@ a:hover {
 }
 
 .font-secondary {
-  font-family: "Playfair Display", serif !important;
+  font-family: "font-sec", serif !important;
+}
+
+.font-secondary-b {
+  font-family: "font-sec-b", serif !important;
 }
 
 .font-tertiary {
