@@ -2,5 +2,142 @@
   <head>
     <title>Apuestas</title>
   </head>
-  <body></body>
+  <body>
+
+
+
+
+
+
+    <button id="loginButton" onclick="googleSignIn()">Google SignIn</button>
+
+    <button onclick="gamble()">Apostar</button>
+
+    <button onclick="gamblesList()">Ver Apuestas</button>
+
+    <button onclick="logOut()">Cerrar Sesión</button>
+
+
+    <div id="userInfo">
+      <span id="userEmail"></span>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
+  
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-database.js"></script>
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyCSqyoE3kkkGkOTO9J9sKCeJRLmBCGBh0o",
+        authDomain: "apuestasestoesungrupo.firebaseapp.com",
+        databaseURL: "https://apuestasestoesungrupo.firebaseio.com",
+        projectId: "apuestasestoesungrupo",
+        storageBucket: "apuestasestoesungrupo.appspot.com",
+        messagingSenderId: "794237906709",
+        appId: "1:794237906709:web:f48cae73c72ed8a0a4831c"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+
+      function googleSignIn(){
+        var provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().signInWithPopup(provider).then(function(result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        console.log(result);
+        console.log("Successful LogIn");
+        writeUserData(user.userId,user.name,user.email,user.imageUrl);
+
+        IsCurrentUser();
+        // ...
+        
+      }).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        console.log(error)
+        console.log("Error LogIn")
+        // ...
+      });
+    }
+    var database = firebase.database();
+
+    function getCurrentUser(){
+      var user = firebase.auth().currentUser;
+
+      if (user) {
+        // User is signed in.
+        return user;
+      } else {
+        return undefined;
+        // No user is signed in.
+      }
+    }
+
+    function IsCurrentUser(){
+      var user = firebase.auth().currentUser;
+
+      if (user) {
+        // User is signed in.
+        loadCurrentUserData(user);
+        document.getElementById("loginButton").style.display = "none";
+        return true;
+      } else {
+        return false;
+        // No user is signed in.
+      }
+
+    }
+
+    function loadCurrentUserData(user){
+      
+      document.getElementById("userEmail").innerHTML = user.email;
+
+    }
+
+    function clearCurrentUserData(){
+      document.getElementById("userEmail").innerHTML = "";
+    }
+    function gamble(){
+
+    }
+
+    function writeUserData(userId, name, email, imageUrl) {
+      debugger;
+    firebase.database().ref('users/' + email.split("@")[0]).set({
+      username: name == undefined ? "" : name,
+      email: email,
+      profile_picture : imageUrl == undefined ? "" : imageUrl
+    });
+}
+
+    function gamblesList(){
+
+    }
+
+    function logOut(){
+      firebase.auth().signOut().then(function() {
+        // Sign-out successful.
+        console.log("Logged Out");
+        clearCurrentUserData();
+        document.getElementById("loginButton").style.display = "flex";
+
+      }).catch(function(error) {
+        console.log("Error Loggin Out")
+        // An error happened.
+      });
+    }
+
+    </script>
+  </body>
 </html>
