@@ -1,27 +1,52 @@
 <html>
   <head>
     <title>Apuestas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
   </head>
   <body>
 
 
 
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Apuestas loco</a>
 
-
-    <button id="loginButton" onclick="googleSignIn()">Google SignIn</button>
-
-    <button onclick="gamble()">Apostar</button>
-
-    <button onclick="gamblesList()">Ver Apuestas</button>
-
-    <button onclick="logOut()">Cerrar Sesión</button>
-
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active p-2">
+        <button class="btn btn-primary" hidden id="gambleButton" onclick="gamble()" >Apostar</button>
+      </li>
+      <li class="nav-item p-2">
+        <button class="btn btn-primary" hidden id="gamblesListButton" onclick="gamblesList()" >Ver Apuestas</button>
+      </li>
+      
+      
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <li class="nav-item dropdown" id="userInfo" style="display: none;">
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <span id="userEmail"></span>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item btn btn-warning" onclick="logOut()" href="#">Cerrar Sesión</a>
+        </div>
+      </li>
+      <button class="btn btn-success my-2 my-sm-0 p-2 mr-2" id="loginButton" type="submit" onclick="googleSignIn()">Iniciar Sesión</button>
+      
+    </form>
+  </div>
+ 
+</nav>
+    
 
     <div id="userInfo">
       <span id="userEmail"></span>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
   
     <!-- Add Firebase products that you want to use -->
@@ -53,6 +78,9 @@
         console.log(result);
         console.log("Successful LogIn");
         writeUserData(user.userId,user.name,user.email,user.imageUrl);
+        document.getElementById("gamblesListButton").style.display = "block";
+        document.getElementById("gambleButton").style.display = "block";
+        
 
         IsCurrentUser();
         // ...
@@ -91,6 +119,8 @@
         // User is signed in.
         loadCurrentUserData(user);
         document.getElementById("loginButton").style.display = "none";
+        document.getElementById("userInfo").style.display = "block";
+
         return true;
       } else {
         return false;
@@ -130,7 +160,13 @@
         // Sign-out successful.
         console.log("Logged Out");
         clearCurrentUserData();
-        document.getElementById("loginButton").style.display = "flex";
+
+        document.getElementById("userInfo").style.display = "none";
+
+        document.getElementById("gamblesListButton").style.display = "none";
+        document.getElementById("gambleButton").style.display = "none";
+        document.getElementById("loginButton").style.display = "block";
+
 
       }).catch(function(error) {
         console.log("Error Loggin Out")
