@@ -2,6 +2,7 @@
   <head>
     <title>Apuestas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
   </head>
   <body>
@@ -15,10 +16,10 @@
   <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
       <li class="nav-item active p-2">
-        <button class="btn btn-primary" hidden id="gambleButton" onclick="gamble()" >Apostar</button>
+        <button class="btn btn-primary" style="display: none;" id="gambleButton" onclick="showGamble()" >Apostar</button>
       </li>
       <li class="nav-item p-2">
-        <button class="btn btn-primary" hidden id="gamblesListButton" onclick="gamblesList()" >Ver Apuestas</button>
+        <button class="btn btn-primary" style="display: none;" id="gamblesListButton" onclick="gamblesList()" >Ver Apuestas</button>
       </li>
       
       
@@ -32,21 +33,117 @@
           <a class="dropdown-item btn btn-warning" onclick="logOut()" href="#">Cerrar Sesión</a>
         </div>
       </li>
-      <button class="btn btn-success my-2 my-sm-0 p-2 mr-2" id="loginButton" type="submit" onclick="googleSignIn()">Iniciar Sesión</button>
       
     </form>
   </div>
  
 </nav>
     
+  <button class="btn btn-success my-2 my-sm-0 p-2 mr-2" id="loginButton" style="position: absolute;top: 40%;left: 42%; width: 300px;height: 100px;" type="submit" onclick="googleSignIn()">Iniciar Sesión</button>
 
-    <div id="userInfo">
-      <span id="userEmail"></span>
+  <div class="p-5" id="gambleCard" style="display: none;">
+    <div class="card text-center">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" id="blackjack-tab" href="#blackjack">BlackJack</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" id="ruleta-tab" href="#ruleta">Ruleta</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" id="otros-tab" href="#otros">Otros</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="blackjack" role="tabpanel" aria-labelledby="blackjack-tab">
+          <div class="card-body">
+            <h5 class="card-title">Apuesta Blackjack</h5>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="text" id="gambleValue1" class="form-control" aria-label="Amount (to the nearest dollar)">
+            </div>
+            <a href="#" onclick="gamble(0)" class="btn btn-primary">Apostar</a>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="ruleta" role="tabpanel" aria-labelledby="ruleta-tab">
+          <div class="card-body">
+            <h5 class="card-title">Apuesta Ruleta</h5>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="text" id="gambleValue2" class="form-control" aria-label="Amount (to the nearest dollar)">
+            </div>
+            <a href="#" onclick="gamble(1)" class="btn btn-primary">Apostar</a>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="otros" role="tabpanel" aria-labelledby="otros-tab">
+          <div class="card-body">
+            <h5 class="card-title">Apuesta Otros</h5>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">$</span>
+              </div>
+              <input type="text" id="gambleValue3" class="form-control" aria-label="Amount (to the nearest dollar)">
+            </div>
+            <a href="#" onclick="gamble(2)" class="btn btn-primary">Apostar</a>
+          </div>
+        </div>
+      </div>
+      
     </div>
+  </div>
+    
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+
+  <div class="p-5" id="gambleList" style="display: none;">
+    <div class="card text-center">
+      <div class="card-header">
+        <ul class="nav nav-pills card-header-pills">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" id="blackjack-tab" href="#blackjackList">BlackJack</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" id="ruleta-tab" href="#ruletaList">Ruleta</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" id="otros-tab" href="#otrosList">Otros</a>
+          </li>
+        </ul>
+      </div>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="blackjackList" role="tabpanel" aria-labelledby="blackjackList-tab">
+          <div class="card-body">
+            <h5 class="card-title">Apuestas Blackjack</h5>
+            <ul class="list-group blackjack" id="listgambleblackjack">
+            </ul>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="ruletaList" role="tabpanel" aria-labelledby="ruletaList-tab">
+          <div class="card-body">
+            <h5 class="card-title">Apuestas Ruleta</h5>
+            <ul class="list-group ruleta" id="listgambleruleta">
+            </ul>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="otrosList" role="tabpanel" aria-labelledby="otrosList-tab">
+          <div class="card-body">
+            <h5 class="card-title">Apuestas Otros</h5>
+            <ul class="list-group otros" id="listgambleotros">
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+
     <script src="https://www.gstatic.com/firebasejs/6.2.0/firebase-app.js"></script>
   
     <!-- Add Firebase products that you want to use -->
@@ -78,8 +175,7 @@
         console.log(result);
         console.log("Successful LogIn");
         writeUserData(user.userId,user.name,user.email,user.imageUrl);
-        document.getElementById("gamblesListButton").style.display = "block";
-        document.getElementById("gambleButton").style.display = "block";
+        showAll();
         
 
         IsCurrentUser();
@@ -100,6 +196,27 @@
     }
     var database = firebase.database();
 
+    $(document).ready(function(){
+        IsCurrentUser();
+    });
+
+    function showGamble(){
+      hideGambleList();
+      document.getElementById("gambleCard").style.display = "block";
+    }
+
+    function hideGamble(){
+      document.getElementById("gambleCard").style.display = "none";
+    }
+
+    function showGambleList(){
+      hideGamble();
+      document.getElementById("gambleList").style.display = "block";
+    }
+
+    function hideGambleList(){
+      document.getElementById("gambleList").style.display = "none";
+    }
     function getCurrentUser(){
       var user = firebase.auth().currentUser;
 
@@ -114,13 +231,12 @@
 
     function IsCurrentUser(){
       var user = firebase.auth().currentUser;
-
+debugger;
       if (user) {
         // User is signed in.
         loadCurrentUserData(user);
         document.getElementById("loginButton").style.display = "none";
-        document.getElementById("userInfo").style.display = "block";
-
+        showAll()
         return true;
       } else {
         return false;
@@ -138,33 +254,150 @@
     function clearCurrentUserData(){
       document.getElementById("userEmail").innerHTML = "";
     }
-    function gamble(){
+    function gamble(type){
+      game = "";
+      value = 0;
+      switch(type){
+        case 0: //Blackjack
+          game = "blackjack";
+          value = document.getElementById("gambleValue1").value;
+          break;  
+        case 1: //Ruleta
+          game = "ruleta";
+          value = document.getElementById("gambleValue2").value;
+          break;  
+        case 2: //Otros
+          game = "otros";
+          value = document.getElementById("gambleValue3").value;
+          break;  
+      }
+      debugger;
+      let user = getCurrentUser();
+      firebase.database().ref('gambles/' + game +'/'+user.email.split("@")[0]).set({
+         email: user.email,
+         value: value
+      });
 
     }
 
+    
+
     function writeUserData(userId, name, email, imageUrl) {
-      debugger;
-    firebase.database().ref('users/' + email.split("@")[0]).set({
-      username: name == undefined ? "" : name,
-      email: email,
-      profile_picture : imageUrl == undefined ? "" : imageUrl
-    });
+      firebase.database().ref('users/' + email.split("@")[0]).set({
+        username: name == undefined ? "" : name,
+        email: email,
+        profile_picture : imageUrl == undefined ? "" : imageUrl
+      });
 }
 
     function gamblesList(){
+      hideGamble();
+      showGambleList();
+      
+      debugger;
+      var blackjackref = database.ref('gambles/blackjack');
+      blackjackref.on('value', function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            updateBlackjackValues(childData)
+          });
+      });
+
+     var ruletaref = database.ref('gambles/ruleta');
+     ruletaref.on('value', function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            updateRuletaValues(childData)
+          });
+      });
+
+      var otrosref = database.ref('gambles/otros');
+      otrosref.on('value', function(snapshot) {
+          snapshot.forEach(function(childSnapshot) {
+            var childData = childSnapshot.val();
+            updateOtrosValues(childData)
+          });
+      });
+    }
+
+    function updateBlackjackValues(child){
+
+      
+      var ulElem = document.getElementById('listgambleblackjack').getElementsByTagName("li");
+      debugger;
+      // let duplicated = ulElem.find(element => element.includes(snapshot.email));
+      // ulElem.removeChild(duplicated);
+      
+      for (let i = 0; ulElem[i]; i++) {
+          // node is your element!
+          var element = ulElem[i];
+          if(element.textContent.split(" -")[0] == child.email){
+            ulElem[i].remove();
+          }
+      }
+      $('#listgambleblackjack').prepend('<li class="list-group-item">'+child.email+' - '+ child.value+'</li>');
 
     }
 
+    function updateRuletaValues(child){
+
+            
+      var ulElem = document.getElementById('listgambleruleta').getElementsByTagName("li");
+      debugger;
+      // let duplicated = ulElem.find(element => element.includes(snapshot.email));
+      // ulElem.removeChild(duplicated);
+
+      for (let i = 0; ulElem[i]; i++) {
+          // node is your element!
+          var element = ulElem[i];
+          if(element.textContent.split(" -")[0] == child.email){
+            ulElem[i].remove();
+          }
+      }
+      $('#listgambleruleta').prepend('<li class="list-group-item">'+child.email+' - '+ child.value+'</li>');
+
+    }
+
+  function updateOtrosValues(child){
+
+            
+      var ulElem = document.getElementById('listgambleotros').getElementsByTagName("li");
+      debugger;
+      // let duplicated = ulElem.find(element => element.includes(snapshot.email));
+      // ulElem.removeChild(duplicated);
+
+      for (let i = 0; ulElem[i]; i++) {
+          // node is your element!
+          var element = ulElem[i];
+          if(element.textContent.split(" -")[0] == child.email){
+            ulElem[i].remove();
+          }
+      }
+      $('#listgambleotros').prepend('<li class="list-group-item">'+child.email+' - '+ child.value+'</li>');
+
+  }
+    function hideAll(){
+        document.getElementById("userInfo").style.display = "none";
+        document.getElementById("gambleCard").style.display = "none";
+        document.getElementById("gambleList").style.display = "none";
+
+        document.getElementById("gamblesListButton").style.display = "none";
+        document.getElementById("gambleButton").style.display = "none";
+    }
+
+    function showAll(){
+      document.getElementById("userInfo").style.display = "block";
+
+        document.getElementById("gamblesListButton").style.display = "block";
+        document.getElementById("gambleButton").style.display = "block";
+    }
     function logOut(){
       firebase.auth().signOut().then(function() {
         // Sign-out successful.
         console.log("Logged Out");
         clearCurrentUserData();
 
-        document.getElementById("userInfo").style.display = "none";
-
-        document.getElementById("gamblesListButton").style.display = "none";
-        document.getElementById("gambleButton").style.display = "none";
+        hideAll();
         document.getElementById("loginButton").style.display = "block";
 
 
@@ -174,6 +407,12 @@
       });
     }
 
+    
+    
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+   
   </body>
 </html>
